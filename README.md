@@ -1,2 +1,3 @@
-# cis271-aircraft-rental-webapp
-This is a simple web application that allows users to reserve times to rent aircraft and manage their current reservations.  It will also provide basic weather/forecast data to the users
+# cis371-aircraft-rental-webapp
+## Overview
+The goal of this project is to create a simple interface where users may sign in and access a table of aircraft available for rent during a given week.  Users may select available aircraft along with a given date and time, after which the aircraft is made unavailable to other users for the time specified by that user.  Users will also have access to forecast data for their selected day, as well as daily METAR data.  Users will be able to view current rentals held by their account, where they can modify the rental date/time as is available or cancel their rental if they wish.
