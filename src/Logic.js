@@ -9,5 +9,7 @@ export default {
         console.log(startTime);
         console.log(endTime);
     },
-    isSignedIn: function () { },
+    isSignedIn: function () {
+        return true;
+    },
 };
