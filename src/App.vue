@@ -6,9 +6,16 @@
 </template>
 
 <script>
+import RentalList from "./components/RentalList.vue"
+import RentalItem from "./components/RentalItem.vue"
+
+@Component({
+  components: {
+    RentalList, RentalItem
+  },
+})
 export default {
   name: "App",
-  components: {},
 };
 </script>
 
