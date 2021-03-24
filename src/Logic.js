@@ -9,4 +9,5 @@ export default {
         console.log(startTime);
         console.log(endTime);
     },
+    isSignedIn: function () { },
 };
