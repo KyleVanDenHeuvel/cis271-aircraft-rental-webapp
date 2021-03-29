@@ -5,6 +5,10 @@
     Password: <input v-model="password" type="password" /><br />
     Retype Password: <input v-model="password" type="password" /><br />
     <button v-on:click="login()">Create!</button>
+    <p>
+      Already have an account? Click
+      <router-link to="/">here</router-link> to login.
+    </p>
   </div>
 </template>
 

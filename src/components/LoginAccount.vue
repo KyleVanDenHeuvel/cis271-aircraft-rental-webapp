@@ -4,6 +4,10 @@
     <p>Pilot Certificate Number: <input v-model="certificate" /></p>
     <p>Password: <input v-model="password" type="password" /></p>
     <button v-on:click="login()">Login!</button>
+    <p>
+      Need an account? Click
+      <router-link to="/create">here</router-link> to create an account.
+    </p>
   </div>
 </template>
 
