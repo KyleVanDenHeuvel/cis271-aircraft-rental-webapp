@@ -4,7 +4,7 @@
     Pilot Certificate Number: <input v-model="certificate" /><br />
     Password: <input v-model="password" type="password" /><br />
     Retype Password: <input v-model="password" type="password" /><br />
-    <button>Create!</button>
+    <button v-on:click="login()">Create!</button>
   </div>
 </template>
 
@@ -12,6 +12,12 @@
 export default {
   name: "CreateAccount",
   components: {},
+  data: () => {
+    return {
+      certificate: "",
+      password: "",
+    };
+  },
   methods: {
     login: function () {},
   },

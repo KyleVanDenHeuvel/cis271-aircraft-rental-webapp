@@ -3,7 +3,7 @@
     <h1>Login</h1>
     <p>Pilot Certificate Number: <input v-model="certificate" /></p>
     <p>Password: <input v-model="password" type="password" /></p>
-    <button>Login!</button>
+    <button v-on:click="login()">Login!</button>
   </div>
 </template>
 
@@ -11,6 +11,12 @@
 export default {
   name: "LoginAccount",
   components: {},
+  data: () => {
+    return {
+      certificate: "",
+      password: "",
+    };
+  },
   methods: {
     login: function () {},
   },

@@ -4,6 +4,19 @@ import App from './App.vue';
 import LoginAccount from "./components/LoginAccount";
 import CreateAccount from "./components/CreateAccount";
 import Weekly from "./components/Weekly";
+import firebase from 'firebase/app';
+import 'firebase/firestore';
+
+const firebaseConfig = {
+  apiKey: 'AIzaSyAJq0ueVxCKc6y3zBbzd9-bJhxuTSntBAs',
+  authDomain: 'cis371-aircraft-rental-webapp.firebaseapp.com',
+  projectId: 'cis371-aircraft-rental-webapp',
+  storageBucket: 'cis371-aircraft-rental-webapp.appspot.com',
+  messagingSenderId: '759581800618',
+  appId: '1:759581800618:web:749a7882ff731ad23cf8d3'
+};
+
+firebase.initializeApp(firebaseConfig);
 
 Vue.config.productionTip = false;
 Vue.use(VueRouter);
