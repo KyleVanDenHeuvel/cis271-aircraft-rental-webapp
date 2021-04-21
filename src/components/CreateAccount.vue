@@ -1,10 +1,10 @@
 <template>
   <div id="login">
     <h1>Create</h1>
-    Pilot Certificate Number: <input v-model="certificate" /><br />
+    E-Mail Address: <input v-model="email" /><br />
     Password: <input v-model="password" type="password" /><br />
-    Retype Password: <input v-model="password" type="password" /><br />
-    <button v-on:click="login()">Create!</button>
+    Retype Password: <input v-model="retyped" type="password" /><br />
+    <button v-on:click="createAcount()">Create!</button>
     <p>
       Already have an account? Click
       <router-link to="/">here</router-link> to login.
@@ -18,12 +18,26 @@ export default {
   components: {},
   data: () => {
     return {
-      certificate: "",
+      email: "",
       password: "",
+      retyped: "",
     };
   },
   methods: {
-    login: function () {},
+    createAcount: function () {
+      if (this.password === this.retyped) {
+        this.$appAuth
+          .createUserWithEmailAndPassword(this.email, this.password)
+          .then(() => {
+            this.$router.push({ path: "/weekly" });
+          })
+          .catch((err) => {
+            alert(`Unable to create account, ${err}`);
+          });
+      } else {
+        alert("Passwords do not match!");
+      }
+    },
   },
 };
 </script>

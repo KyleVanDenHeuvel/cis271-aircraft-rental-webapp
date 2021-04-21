@@ -5,6 +5,7 @@ import LoginAccount from "./components/LoginAccount";
 import CreateAccount from "./components/CreateAccount";
 import Weekly from "./components/Weekly";
 import firebase from 'firebase/app';
+import 'firebase/auth';
 import 'firebase/firestore';
 
 const firebaseConfig = {
@@ -16,7 +17,10 @@ const firebaseConfig = {
   appId: '1:759581800618:web:749a7882ff731ad23cf8d3'
 };
 
-firebase.initializeApp(firebaseConfig);
+const app = firebase.initializeApp(firebaseConfig);
+
+Vue.prototype.$appDB = firebase.firestore(app);
+Vue.prototype.$appAuth = firebase.auth(app);
 
 Vue.config.productionTip = false;
 Vue.use(VueRouter);

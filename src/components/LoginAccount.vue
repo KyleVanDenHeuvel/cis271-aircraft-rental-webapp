@@ -1,7 +1,7 @@
 <template>
   <div id="login">
     <h1>Login</h1>
-    <p>Pilot Certificate Number: <input v-model="certificate" /></p>
+    <p>E-Mail Address: <input v-model="email" /></p>
     <p>Password: <input v-model="password" type="password" /></p>
     <button v-on:click="login()">Login!</button>
     <p>
@@ -17,12 +17,21 @@ export default {
   components: {},
   data: () => {
     return {
-      certificate: "",
+      email: "",
       password: "",
     };
   },
   methods: {
-    login: function () {},
+    login: function () {
+      this.$appAuth
+        .signInWithEmailAndPassword(this.email, this.password)
+        .then(() => {
+          this.$router.push({ path: "/weekly" });
+        })
+        .catch((err) => {
+          alert(`Unable to login, ${err}`);
+        });
+    },
   },
 };
 </script>
