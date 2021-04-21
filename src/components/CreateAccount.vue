@@ -1,10 +1,12 @@
 <template>
   <div id="login">
     <h1>Create</h1>
-    E-Mail Address: <input v-model="email" /><br />
-    Password: <input v-model="password" type="password" /><br />
-    Retype Password: <input v-model="retyped" type="password" /><br />
-    <button v-on:click="createAcount()">Create!</button>
+    <div id="fields">
+      E-Mail Address: <input v-model="email" /><br />
+      Password: <input v-model="password" type="password" /><br />
+      Retype Password: <input v-model="retyped" type="password" /><br />
+      <button v-on:click="createAcount()">Create!</button>
+    </div>
     <p>
       Already have an account? Click
       <router-link to="/">here</router-link> to login.
@@ -24,7 +26,7 @@ export default {
     };
   },
   methods: {
-    createAcount: function () {
+    createAcount: function() {
       if (this.password === this.retyped) {
         this.$appAuth
           .createUserWithEmailAndPassword(this.email, this.password)
@@ -42,5 +44,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

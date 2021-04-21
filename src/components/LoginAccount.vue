@@ -1,9 +1,11 @@
 <template>
   <div id="login">
     <h1>Login</h1>
-    <p>E-Mail Address: <input v-model="email" /></p>
-    <p>Password: <input v-model="password" type="password" /></p>
-    <button v-on:click="login()">Login!</button>
+    <div id="fields">
+      <p>E-Mail Address: <input v-model="email" /></p>
+      <p>Password: <input v-model="password" type="password" /></p>
+      <button v-on:click="login()">Login!</button>
+    </div>
     <p>
       Need an account? Click
       <router-link to="/create">here</router-link> to create an account.
@@ -22,7 +24,7 @@ export default {
     };
   },
   methods: {
-    login: function () {
+    login: function() {
       this.$appAuth
         .signInWithEmailAndPassword(this.email, this.password)
         .then(() => {
@@ -38,10 +40,14 @@ export default {
 
 <style>
 #login {
-  justify-content: left;
-  text-align: left;
   margin: 2rem;
+  padding: 1rem;
   background-color: lightblue;
+}
+#fields {
+  display: inline-block;
+  justify-content: left;
+  text-align: right;
 }
 p {
   margin-left: 1rem;
