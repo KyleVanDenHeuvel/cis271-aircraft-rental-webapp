@@ -1,5 +1,6 @@
 <template>
   <div id="weekly">
+    <button v-on:click="logout()">Log Out</button>
     Aircraft:
     <select></select>
     <br />
@@ -24,7 +25,12 @@
 export default {
   name: "Weekly",
   components: {},
-  methods: {},
+  methods: {
+    logout: function () {
+      this.$appAuth.signOut();
+      this.$router.back();
+    },
+  },
 };
 </script>
 
