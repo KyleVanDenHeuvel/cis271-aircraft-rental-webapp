@@ -72,7 +72,8 @@ export default {
 }
 
 #calendar {
-  border: 2px solid lightgoldenrodyellow;
+  border: 4px solid whitesmoke;
+  border-radius: 6px;
   margin-left: 1rem;
 }
 

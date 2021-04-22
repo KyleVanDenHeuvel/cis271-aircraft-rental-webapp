@@ -35,7 +35,9 @@ export default {
 } */
 
 table {
-  border: 2px solid black;
+  border: 4px solid whitesmoke;
+  background-color: lightgray;
+  border-radius: 6px;
 }
 
 button {
