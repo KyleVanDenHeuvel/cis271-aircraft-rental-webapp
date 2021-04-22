@@ -4,37 +4,44 @@
     Aircraft:
     <select></select>
     <br />
-    <table>
-      <thead>
-        <tr>
-          <th>{{ week[0] }}</th>
-          <th>{{ week[1] }}</th>
-          <th>{{ week[2] }}</th>
-          <th>{{ week[3] }}</th>
-          <th>{{ week[4] }}</th>
-          <th>{{ week[5] }}</th>
-          <th>{{ week[6] }}</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-        </tr>
-      </tbody>
-    </table>
+    <div id="week-container">
+      <rental-list />
+      <table id="calendar">
+        <thead>
+          <tr>
+            <th>{{ week[0] }}</th>
+            <th>{{ week[1] }}</th>
+            <th>{{ week[2] }}</th>
+            <th>{{ week[3] }}</th>
+            <th>{{ week[4] }}</th>
+            <th>{{ week[5] }}</th>
+            <th>{{ week[6] }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </template>
 
 <script>
+import RentalList from "./RentalList.vue";
+
 export default {
   name: "Weekly",
-  components: {},
+  components: {
+    RentalList,
+  },
   data: () => {
     let currentDate = new Date();
     let week = [];
@@ -48,7 +55,7 @@ export default {
     };
   },
   methods: {
-    logout: function () {
+    logout: function() {
       this.$appAuth.signOut();
       this.$router.back();
     },
@@ -64,7 +71,23 @@ export default {
   background-color: lightblue;
 }
 
+#calendar {
+  border: 2px solid lightgoldenrodyellow;
+  margin-left: 1rem;
+}
+
 .today {
   background-color: lightgreen;
+}
+
+#week-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding: 2rem;
+}
+
+select {
+  min-width: 200px;
 }
 </style>

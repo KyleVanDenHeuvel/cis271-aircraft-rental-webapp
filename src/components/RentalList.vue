@@ -1,22 +1,44 @@
 <template>
   <div class="list">
     <table>
-        <tr class="rentals" v-for="(rental,pos) in rentals" :key="pos">
-        <td>{{rental}}</td>
+      <tr>
+        <td>[IMG]</td>
+        <td>Aircraft</td>
+        <td>Tail #</td>
+        <button>>>></button>
+      </tr>
+      <tr>
+        <td>[IMG]</td>
+        <td>Aircraft</td>
+        <td>Tail #</td>
+        <button>>>></button>
+      </tr>
+      <!-- <tr class="rentals" v-for="(rental,pos) in rentals" :key="pos">
+        <td>{{rental}}</td> -->
     </table>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'RentalList',
+  name: "RentalList",
   props: {
-      rentals: Array,
+    rentals: Array,
   },
-}
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+/* #list {
+  
+} */
 
+table {
+  border: 2px solid black;
+}
+
+button {
+  height: 4rem;
+}
 </style>
