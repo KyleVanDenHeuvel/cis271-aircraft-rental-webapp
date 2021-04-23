@@ -8,7 +8,7 @@
           :type="rental.type"
           :tailNumber="rental.tailNumber"
         />
-        <td><button>>>></button></td>
+        <td><button v-on:click="selected(rental.tailNumber)">>>></button></td>
       </tr>
     </table>
   </div>
@@ -22,6 +22,7 @@ export default {
   name: "RentalList",
   props: {
     rentals: Array,
+    selected: Function,
   },
   component: {
     RentalItem,

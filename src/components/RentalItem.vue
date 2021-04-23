@@ -11,7 +11,7 @@ export default {
   name: "RentalItem",
   props: {
     type: String,
-    tailNumber: Number,
+    tailNumber: String,
     image: String,
   },
 };

@@ -19,8 +19,12 @@
           <tr>
             <td v-for="day in week" v-bind:key="day.date">
               <ul>
-                <li v-for="r in day.rentals" v-bind:key="r.time">
-                  <div class="rental-block">
+                <li
+                  v-for="r in day.rentals"
+                  v-bind:key="r.time"
+                  class="rental-block-free"
+                >
+                  <div>
                     {{ r.empty ? "free" : "reserved" }}
                   </div>
                 </li>
@@ -41,25 +45,25 @@ export default {
   components: {
     RentalList,
   },
-  data: function() {
+  data: function () {
     return {
       selected: null,
       aircraft: [],
       week: [],
     };
   },
-  mounted: function() {
+  mounted: function () {
     this.updateAircrafts();
     this.updateWeather();
   },
   methods: {
-    logout: function() {
+    logout: function () {
       this.$appAuth.signOut();
       this.$router.back();
     },
 
     // Fills out the weeks and updates it with weather data.
-    updateWeather: function() {
+    updateWeather: function () {
       let currentDate = new Date();
       this.week = [];
       // Build a list of the next seven days.
@@ -128,7 +132,7 @@ export default {
       tafRequest.send();
     },
 
-    updateAircrafts: function() {
+    updateAircrafts: function () {
       this.aircraft = [];
 
       this.$appDB
@@ -150,7 +154,7 @@ export default {
         .orderBy("time")
         // Fill in the week with rental data but only for the selected
         // aircraft so filter out anything else.
-        .where("tailNumber", "==", this.selected.tailNumber)
+        //.where("tailNumber", "==", this.selected.tailNumber)
         .onSnapshot((qs) => {
           // Clear out any existing data.
           this.week.forEach((day) => {
@@ -170,6 +174,7 @@ export default {
                   // Find the right time slot.
                   day.rentals[data.time / 2] = {
                     empty: false,
+                    date: new Date(data.date),
                     owned:
                       this.$appAuth.currentUser.uid === data.pilot
                         ? true
@@ -201,8 +206,18 @@ export default {
   font-size: 8pt;
 }
 
-.rental-block {
-  background-color: blue;
+.rental-list {
+  list-style-type: none;
+}
+
+.rental-block-free {
+  background-color: lightgreen;
+  list-style-type: none;
+}
+
+.rental-block-used {
+  background-color: lightcoral;
+  list-style-type: none;
 }
 
 #weekly {
