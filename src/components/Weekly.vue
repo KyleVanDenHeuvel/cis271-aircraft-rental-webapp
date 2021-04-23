@@ -3,7 +3,7 @@
     <button v-on:click="logout()">Log Out</button>
     <br />
     <div id="week-container">
-      <rental-list :rentals="aircraft" />
+      <rental-list :rentals="aircraft" :selected="onAircraftSelect" />
       <table id="calendar">
         <thead>
           <tr>
@@ -14,6 +14,17 @@
           <tr>
             <td v-for="day in week" v-bind:key="day.date">
               <p class="metar-data">{{ day.weather }}</p>
+            </td>
+          </tr>
+          <tr>
+            <td v-for="day in week" v-bind:key="day.date">
+              <ul>
+                <li v-for="r in day.rentals" v-bind:key="r.time">
+                  <div class="rental-block">
+                    {{ r.empty ? "free" : "reserved" }}
+                  </div>
+                </li>
+              </ul>
             </td>
           </tr>
         </tbody>
@@ -32,6 +43,7 @@ export default {
   },
   data: function () {
     return {
+      selected: null,
       aircraft: [],
       week: [],
     };
@@ -55,6 +67,7 @@ export default {
         this.week.push({
           date: currentDate.toLocaleDateString(),
           weather: "",
+          rentals: [],
         });
         currentDate = new Date(currentDate.setDate(currentDate.getDate() + 1));
       }
@@ -129,6 +142,54 @@ export default {
         });
       return this.aircraft;
     },
+
+    getRentals: function () {
+      // Query all the rental times from this specific aircraft.
+      this.$appDB
+        .collection("rentals")
+        .orderBy("time")
+        // Fill in the week with rental data but only for the selected
+        // aircraft so filter out anything else.
+        .where("tailNumber", "==", this.selected.tailNumber)
+        .onSnapshot((qs) => {
+          // Clear out any existing data.
+          this.week.forEach((day) => {
+            day.rentals = [];
+            // Create 12 empty slots for the 2 hour flights.
+            for (let i = 0; i < 12; i++)
+              day.rentals.push({ empty: true, owned: false });
+          });
+
+          // Add the rental times.
+          qs.forEach((qds) => {
+            if (qds.exists) {
+              let data = qds.data();
+              // Look at each day and insert that day's rentals.
+              this.week.forEach((day) => {
+                if (day.date.toLocaleDateString() === data.date) {
+                  // Find the right time slot.
+                  day.rentals[data.time / 2] = {
+                    empty: false,
+                    owned:
+                      this.$appAuth.currentUser.uid === data.pilot
+                        ? true
+                        : false,
+                  };
+                }
+              });
+            }
+          });
+        });
+    },
+
+    onAircraftSelect: function (tailNumber) {
+      this.aircraft.forEach((ac) => {
+        if (ac.tailNumber === tailNumber) {
+          this.selected = ac;
+          this.getRentals();
+        }
+      });
+    },
   },
 };
 </script>
@@ -138,6 +199,10 @@ export default {
   min-width: 120pt;
   max-width: 120pt;
   font-size: 8pt;
+}
+
+.rental-block {
+  background-color: blue;
 }
 
 #weekly {
