@@ -24,7 +24,7 @@
                   class="rental-block-free"
                 >
                   <div>
-                    {{ r.empty ? "free" : "reserved" }}
+                    {{ r.time + ": " + (r.empty ? "free" : "reserved") }}
                   </div>
                 </li>
               </ul>
@@ -44,20 +44,20 @@ export default {
   components: {
     RentalList,
   },
-  data: function() {
+  data: function () {
     return {
       selected: null,
       aircraft: [],
       week: [],
     };
   },
-  mounted: function() {
+  mounted: function () {
     this.updateAircrafts();
     this.updateWeather();
   },
   methods: {
     // Fills out the weeks and updates it with weather data.
-    updateWeather: function() {
+    updateWeather: function () {
       let currentDate = new Date();
       this.week = [];
       // Build a list of the next seven days.
@@ -126,7 +126,7 @@ export default {
       tafRequest.send();
     },
 
-    updateAircrafts: function() {
+    updateAircrafts: function () {
       this.aircraft = [];
 
       this.$appDB
@@ -141,7 +141,7 @@ export default {
       return this.aircraft;
     },
 
-    getRentals: function() {
+    getRentals: function () {
       // Query all the rental times from this specific aircraft.
       this.$appDB
         .collection("rentals")
@@ -155,7 +155,7 @@ export default {
             day.rentals = [];
             // Create 12 empty slots for the 2 hour flights.
             for (let i = 0; i < 12; i++)
-              day.rentals.push({ empty: true, owned: false });
+              day.rentals.push({ empty: true, owned: false, time: i * 2 });
           });
 
           // Add the rental times.
@@ -170,6 +170,7 @@ export default {
                   day.rentals[data.time / 2] = {
                     empty: false,
                     date: new Date(data.date),
+                    time: data.time,
                     owned:
                       this.$appAuth.currentUser.uid === data.pilot
                         ? true
@@ -182,7 +183,7 @@ export default {
         });
     },
 
-    onAircraftSelect: function(tailNumber) {
+    onAircraftSelect: function (tailNumber) {
       this.aircraft.forEach((ac) => {
         if (ac.tailNumber === tailNumber) {
           this.selected = ac;
