@@ -34,7 +34,7 @@ export default {
   methods: {
     updateUserAircrafts: function() {
       this.userAircraft = [];
-
+      // Searches for reservations with the user's ID number
       this.$appDB
         .collection("rentals")
         .orderBy("date")
@@ -53,6 +53,7 @@ export default {
     },
     rentalRemoved: function(r) {
       let refs = [];
+      // Searches for documents with the corresponding data
       this.$appDB
         .collection("rentals")
         .where("date", "==", r.date)
@@ -61,20 +62,19 @@ export default {
         .onSnapshot((qs) => {
           console.log(qs.docs);
           let data = qs.docs;
+          // Add document ids to array
           for (let i = 0; i < data.length; i++) {
             refs.push(data[i].id);
           }
+          // Searches for corresponding documents in the rentals collection and deletes them
+          for (let i = 0; i < refs.length; i++) {
+            console.log(this.$appDB.collection("rentals").doc(refs[i]));
+            this.$appDB
+              .collection("rentals")
+              .doc(refs[i])
+              .delete();
+          }
         });
-      for (let i = 0; i < refs.length; i++) {
-        console.log(this.$appDB.collection("rentals").document(refs[i]));
-        this.$appDB
-          .collection("rentals")
-          .document(refs[i])
-          .delete()
-          .addOnSuccessListener(() => {
-            console.log("Sucessfully Deleted" + refs[i]);
-          });
-      }
     },
   },
 };
