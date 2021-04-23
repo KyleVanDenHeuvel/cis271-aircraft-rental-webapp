@@ -154,7 +154,7 @@ export default {
         .orderBy("time")
         // Fill in the week with rental data but only for the selected
         // aircraft so filter out anything else.
-        //.where("tailNumber", "==", this.selected.tailNumber)
+        .where("tailNumber", "==", this.selected.tailNumber)
         .onSnapshot((qs) => {
           // Clear out any existing data.
           this.week.forEach((day) => {
@@ -168,9 +168,10 @@ export default {
           qs.forEach((qds) => {
             if (qds.exists) {
               let data = qds.data();
+              console.log(data);
               // Look at each day and insert that day's rentals.
               this.week.forEach((day) => {
-                if (day.date.toLocaleDateString() === data.date) {
+                if (new Date(day.date).toLocaleDateString() === data.date) {
                   // Find the right time slot.
                   day.rentals[data.time / 2] = {
                     empty: false,
