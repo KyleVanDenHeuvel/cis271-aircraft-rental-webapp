@@ -4,6 +4,7 @@ import App from './App.vue';
 import LoginAccount from "./components/LoginAccount";
 import CreateAccount from "./components/CreateAccount";
 import Weekly from "./components/Weekly";
+import UserRentals from "./components/UserRentals"
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
@@ -28,7 +29,8 @@ Vue.use(VueRouter);
 const routes = [
   { path: "/", component: LoginAccount },
   { path: "/create", component: CreateAccount },
-  { path: "/weekly", component: Weekly }
+  { path: "/weekly", component: Weekly },
+  { path: "/userrentals", component: UserRentals},
 ];
 
 const router = new VueRouter({ routes });
