@@ -184,6 +184,25 @@ export default {
               });
           });
 
+          // Handle rentals being removed from the data.
+          qs.docChanges().forEach((change) => {
+            const data = change.doc.data();
+            if (change.type == "removed") {
+              this.week.forEach((day) => {
+                day.forEach((r) => {
+                  // Look through all the rentals and find the
+                  // one that got removed.
+                  if (
+                    r.date.toLocaleDateString() == data.date &&
+                    r.time == data.time
+                  ) {
+                    r.empty = true;
+                  }
+                });
+              });
+            }
+          });
+
           // Add the rental times.
           qs.forEach((qds) => {
             if (qds.exists) {
