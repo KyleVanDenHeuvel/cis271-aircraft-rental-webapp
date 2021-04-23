@@ -20,7 +20,9 @@
         </thead>
         <tbody>
           <tr>
-            <td>{{ metar.data }}</td>
+            <td>
+              <p class="metar-data">{{ metar.data }}</p>
+            </td>
             <td></td>
             <td></td>
             <td></td>
@@ -84,6 +86,11 @@ export default {
 </script>
 
 <style>
+.metar-data {
+  max-width: 120pt;
+  font-size: 8pt;
+}
+
 #weekly {
   justify-content: left;
   text-align: left;
