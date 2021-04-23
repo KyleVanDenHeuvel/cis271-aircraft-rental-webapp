@@ -56,6 +56,9 @@ export default {
   },
   mounted: function () {
     if (this.$appAuth.currentUser == null) this.$router.push("/");
+    this.selected = null;
+    this.aircraft = [];
+    this.week = [];
 
     this.updateAircrafts();
     this.updateWeather();
