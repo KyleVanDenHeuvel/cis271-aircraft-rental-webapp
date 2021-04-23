@@ -47,21 +47,21 @@ export default {
   components: {
     RentalList,
   },
-  data: function() {
+  data: function () {
     return {
       selected: null,
       aircraft: [],
       week: [],
     };
   },
-  mounted: function() {
+  mounted: function () {
     if (this.$appAuth.currentUser == null) this.$router.push("/");
 
     this.updateAircrafts();
     this.updateWeather();
   },
   methods: {
-    rentalClicked: function(r) {
+    rentalClicked: function (r) {
       if (r.empty) {
         console.log(r);
         // Make sure the user does not select a reserved time.
@@ -75,7 +75,7 @@ export default {
     },
 
     // Fills out the weeks and updates it with weather data.
-    updateWeather: function() {
+    updateWeather: function () {
       let currentDate = new Date();
       this.week = [];
       // Build a list of the next seven days.
@@ -144,7 +144,7 @@ export default {
       tafRequest.send();
     },
 
-    updateAircrafts: function() {
+    updateAircrafts: function () {
       this.aircraft = [];
 
       this.$appDB
@@ -159,7 +159,7 @@ export default {
       return this.aircraft;
     },
 
-    getRentals: function() {
+    getRentals: function () {
       // Query all the rental times from this specific aircraft.
       this.$appDB
         .collection("rentals")
@@ -205,7 +205,7 @@ export default {
         });
     },
 
-    onAircraftSelect: function(tailNumber) {
+    onAircraftSelect: function (tailNumber) {
       this.aircraft.forEach((ac) => {
         if (ac.tailNumber === tailNumber) {
           this.selected = ac;
