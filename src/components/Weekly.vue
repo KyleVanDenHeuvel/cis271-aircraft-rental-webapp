@@ -9,18 +9,18 @@
       <table id="calendar">
         <thead>
           <tr>
-            <th>{{ week[0] }}</th>
-            <th>{{ week[1] }}</th>
-            <th>{{ week[2] }}</th>
-            <th>{{ week[3] }}</th>
-            <th>{{ week[4] }}</th>
-            <th>{{ week[5] }}</th>
-            <th>{{ week[6] }}</th>
+            <th>{{ week[0].date }}</th>
+            <th>{{ week[1].date }}</th>
+            <th>{{ week[2].date }}</th>
+            <th>{{ week[3].date }}</th>
+            <th>{{ week[4].date }}</th>
+            <th>{{ week[5].date }}</th>
+            <th>{{ week[6].date }}</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td></td>
+            <td>{{ metar.data }}</td>
             <td></td>
             <td></td>
             <td></td>
@@ -47,15 +47,35 @@ export default {
     let week = [];
     // Build a list of the next seven days.
     for (let i = 0; i < 7; i++) {
-      week.push(currentDate.toLocaleDateString());
+      week.push({
+        date: currentDate.toLocaleDateString(),
+      });
       currentDate = new Date(currentDate.setDate(currentDate.getDate() + 1));
     }
+
+    let metar = { data: "" };
+    const metarRequest = new XMLHttpRequest();
+
+    metarRequest.open("GET", "https://avwx.rest/api/metar/KGRR");
+    metarRequest.setRequestHeader(
+      "Authorization",
+      "Token fx4OxXj5kJNptfawyQMCjyhyXGJLukoV4qljp9stCjI"
+    );
+
+    metarRequest.onreadystatechange = () => {
+      if (metarRequest.readyState === 4) {
+        metar.data = JSON.parse(metarRequest.responseText).raw;
+      }
+    };
+    metarRequest.send();
+
     return {
       week: week,
+      metar: metar,
     };
   },
   methods: {
-    logout: function() {
+    logout: function () {
       this.$appAuth.signOut();
       this.$router.back();
     },
