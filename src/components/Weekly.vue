@@ -1,6 +1,5 @@
 <template>
   <div id="weekly">
-    <button v-on:click="logout()">Log Out</button>
     <br />
     <div id="week-container">
       <rental-list :rentals="aircraft" :selected="onAircraftSelect" />
@@ -45,25 +44,20 @@ export default {
   components: {
     RentalList,
   },
-  data: function () {
+  data: function() {
     return {
       selected: null,
       aircraft: [],
       week: [],
     };
   },
-  mounted: function () {
+  mounted: function() {
     this.updateAircrafts();
     this.updateWeather();
   },
   methods: {
-    logout: function () {
-      this.$appAuth.signOut();
-      this.$router.back();
-    },
-
     // Fills out the weeks and updates it with weather data.
-    updateWeather: function () {
+    updateWeather: function() {
       let currentDate = new Date();
       this.week = [];
       // Build a list of the next seven days.
@@ -132,7 +126,7 @@ export default {
       tafRequest.send();
     },
 
-    updateAircrafts: function () {
+    updateAircrafts: function() {
       this.aircraft = [];
 
       this.$appDB
@@ -147,7 +141,7 @@ export default {
       return this.aircraft;
     },
 
-    getRentals: function () {
+    getRentals: function() {
       // Query all the rental times from this specific aircraft.
       this.$appDB
         .collection("rentals")
@@ -188,7 +182,7 @@ export default {
         });
     },
 
-    onAircraftSelect: function (tailNumber) {
+    onAircraftSelect: function(tailNumber) {
       this.aircraft.forEach((ac) => {
         if (ac.tailNumber === tailNumber) {
           this.selected = ac;
