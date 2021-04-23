@@ -25,6 +25,9 @@
                 >
                   <div>
                     {{ r.time + ": " + (r.empty ? "free" : "reserved") }}
+                    <button v-if="r.empty" v-on:click="rentalClicked(r)">
+                      Add
+                    </button>
                   </div>
                 </li>
               </ul>
@@ -52,10 +55,25 @@ export default {
     };
   },
   mounted: function () {
+    if (this.$appAuth.currentUser == null) this.$router.push("/");
+
     this.updateAircrafts();
     this.updateWeather();
   },
   methods: {
+    rentalClicked: function (r) {
+      if (r.empty) {
+        console.log(r);
+        // Make sure the user does not select a reserved time.
+        this.$appDB.collection("rentals").add({
+          date: r.date,
+          pilot: this.$appAuth.currentUser.uid,
+          tailNumber: this.selected.tailNumber,
+          time: r.time,
+        });
+      }
+    },
+
     // Fills out the weeks and updates it with weather data.
     updateWeather: function () {
       let currentDate = new Date();
@@ -155,14 +173,18 @@ export default {
             day.rentals = [];
             // Create 12 empty slots for the 2 hour flights.
             for (let i = 0; i < 12; i++)
-              day.rentals.push({ empty: true, owned: false, time: i * 2 });
+              day.rentals.push({
+                empty: true,
+                owned: false,
+                time: i * 2,
+                date: new Date(day.date).toLocaleDateString(),
+              });
           });
 
           // Add the rental times.
           qs.forEach((qds) => {
             if (qds.exists) {
               let data = qds.data();
-              console.log(data);
               // Look at each day and insert that day's rentals.
               this.week.forEach((day) => {
                 if (new Date(day.date).toLocaleDateString() === data.date) {
