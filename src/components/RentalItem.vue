@@ -1,11 +1,8 @@
 <template>
   <div class="list">
-    <tr>
-      <td><img v-bind:src="{ image }" alt="Aircraft Image" /></td>
-      <td>{{ aircraftType }}</td>
-      <td>{{ tailNumber }}</td>
-      <button>>>></button>
-    </tr>
+    <td id="image"><img v-bind:src="image" width="100px" /></td>
+    <td>{{ type }}</td>
+    <td>{{ tailNumber }}</td>
   </div>
 </template>
 
@@ -13,7 +10,7 @@
 export default {
   name: "RentalItem",
   props: {
-    aircraftType: String,
+    type: String,
     tailNumber: Number,
     image: String,
   },
@@ -21,4 +18,8 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped></style>
+<style scoped>
+#image {
+  width: 200px;
+}
+</style>

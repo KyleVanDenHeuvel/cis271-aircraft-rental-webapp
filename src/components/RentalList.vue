@@ -1,29 +1,30 @@
 <template>
   <div class="list">
     <table>
-      <tr>
-        <td>[IMG]</td>
-        <td>Aircraft</td>
-        <td>Tail #</td>
-        <button>>>></button>
+      <rental-item />
+      <tr class="rentals" v-for="(rental, pos) in rentals" :key="pos">
+        <rental-item
+          :image="rental.image"
+          :type="rental.type"
+          :tailNumber="rental.tailNumber"
+        />
+        <td><button>>>></button></td>
       </tr>
-      <tr>
-        <td>[IMG]</td>
-        <td>Aircraft</td>
-        <td>Tail #</td>
-        <button>>>></button>
-      </tr>
-      <!-- <tr class="rentals" v-for="(rental,pos) in rentals" :key="pos">
-        <td>{{rental}}</td> -->
     </table>
   </div>
 </template>
 
 <script>
+import RentalItem from "./RentalItem.vue";
+
 export default {
+  components: { RentalItem },
   name: "RentalList",
   props: {
     rentals: Array,
+  },
+  component: {
+    RentalItem,
   },
 };
 </script>

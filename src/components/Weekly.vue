@@ -41,25 +41,25 @@ export default {
   components: {
     RentalList,
   },
-  data: function () {
+  data: function() {
     return {
       selected: null,
       aircraft: [],
       week: [],
     };
   },
-  mounted: function () {
+  mounted: function() {
     this.updateAircrafts();
     this.updateWeather();
   },
   methods: {
-    logout: function () {
+    logout: function() {
       this.$appAuth.signOut();
       this.$router.back();
     },
 
     // Fills out the weeks and updates it with weather data.
-    updateWeather: function () {
+    updateWeather: function() {
       let currentDate = new Date();
       this.week = [];
       // Build a list of the next seven days.
@@ -128,7 +128,7 @@ export default {
       tafRequest.send();
     },
 
-    updateAircrafts: function () {
+    updateAircrafts: function() {
       this.aircraft = [];
 
       this.$appDB
