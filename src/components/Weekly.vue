@@ -192,10 +192,7 @@ export default {
                 day.rentals.forEach((r) => {
                   // Look through all the rentals and find the
                   // one that got removed.
-                  if (
-                    r.date.toLocaleDateString() == data.date &&
-                    r.time == data.time
-                  ) {
+                  if (r.date == data.date && r.time == data.time) {
                     r.empty = true;
                   }
                 });
