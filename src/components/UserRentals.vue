@@ -9,10 +9,10 @@
         </th>
 
         <tr v-for="(rental, pos) in userAircraft" :key="pos">
-          <td>Date: {{ rental.date }}</td>
-          <td>Time: {{ rental.time }}</td>
-          <td>Tail Number: {{ rental.tailNumber }}</td>
-          <td><button>X</button></td>
+          <td><b>Date: </b>{{ rental.date }}</td>
+          <td><b>Time: </b>{{ rental.time }}</td>
+          <td><b>Tail Number: </b>{{ rental.tailNumber }}</td>
+          <td><button v-on:click="rentalRemoved(rental)">X</button></td>
         </tr>
       </table>
     </div>
@@ -51,6 +51,31 @@ export default {
         });
       return this.userAircraft;
     },
+    rentalRemoved: function(r) {
+      let refs = [];
+      this.$appDB
+        .collection("rentals")
+        .where("date", "==", r.date)
+        .where("time", "==", r.time)
+        .where("tailNumber", "==", r.tailNumber)
+        .onSnapshot((qs) => {
+          console.log(qs.docs);
+          let data = qs.docs;
+          for (let i = 0; i < data.length; i++) {
+            refs.push(data[i].id);
+          }
+        });
+      for (let i = 0; i < refs.length; i++) {
+        console.log(this.$appDB.collection("rentals").document(refs[i]));
+        this.$appDB
+          .collection("rentals")
+          .document(refs[i])
+          .delete()
+          .addOnSuccessListener(() => {
+            console.log("Sucessfully Deleted" + refs[i]);
+          });
+      }
+    },
   },
 };
 </script>
@@ -73,5 +98,8 @@ table {
   border: 4px solid whitesmoke;
   background-color: lightgray;
   border-radius: 6px;
+}
+td {
+  margin-left: 0.25rem;
 }
 </style>
