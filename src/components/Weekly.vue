@@ -189,7 +189,7 @@ export default {
             const data = change.doc.data();
             if (change.type == "removed") {
               this.week.forEach((day) => {
-                day.forEach((r) => {
+                day.rentals.forEach((r) => {
                   // Look through all the rentals and find the
                   // one that got removed.
                   if (
