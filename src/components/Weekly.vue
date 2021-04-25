@@ -184,18 +184,21 @@ export default {
               });
           });
 
-          // Handle rentals being removed from the data.
+          // Handle when documents get deleted.
           qs.docChanges().forEach((change) => {
             const data = change.doc.data();
-            if (change.type == "removed") {
+            if (change.type === "removed") {
+              // Find the rental that was deleted and also delete it from our array.
               this.week.forEach((day) => {
-                day.rentals.forEach((r) => {
-                  // Look through all the rentals and find the
-                  // one that got removed.
-                  if (r.date == data.date && r.time == data.time) {
-                    r.empty = true;
-                  }
-                });
+                if (new Date(day.date).toLocaleDateString() === data.date) {
+                  // Find the time and set it to be empty.
+                  day.rentals[data.time / 2] = {
+                    empty: true,
+                    owned: false,
+                    time: data.time,
+                    date: new Date(day.date).toLocaleDateString(),
+                  };
+                }
               });
             }
           });
